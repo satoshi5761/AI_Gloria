@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project AI</title>
+    <style>
+        .maze-container {
+            display: grid;
+            gap: 1px;
+        }
+        .cell {
+            width: 10px;
+            height: 10px;
+        }
+        .wall { background-color: black; }
+        .path { background-color: white; }
+        .solution { background-color: red !important; } /* Keeps path visible */
+    </style>
+</head>
+<body>
+    <h1>Labirin Tikus</h1>
+    <div class="maze-container" id="maze"></div>
+    <br>
+    <button onclick="showPath()">Show Path</button>
+    <button onclick="generateNewMaze()">Generate New Maze</button>
+    <p id="statusMessage"></p>
+
+    <script>
+        let mazeData = [];
+        let solutionDisplayed = false; 
+
+        function loadMaze() {
+            fetch('maze.txt?' + new Date().getTime()) // Prevent cache issues
+                .then(response => response.text())
+                .then(text => {
+                    console.log("Maze loaded");
+                    mazeData = text.trim().split('\n').map(row => row.split(' ').map(Number));
+                    const mazeContainer = document.getElementById("maze");
+
+                    let mazeSize = mazeData[0].length;
+                    mazeContainer.style.gridTemplateColumns = `repeat(${mazeSize}, 10px)`;
+                    mazeContainer.innerHTML = "";
+
+                    mazeData.forEach(row => {
+                        row.forEach(cell => {
+                            let div = document.createElement("div");
+                            div.className = "cell " + (cell === -1 ? "wall" : "path");
+                            mazeContainer.appendChild(div);
+                        });
+                    });
+
+                    // 🚨 Path is NOT redrawn after generating new maze
+                    solutionDisplayed = false;
+                })
+                .catch(error => console.error("Error loading maze:", error));
+        }
+
+        function showPath() {
+            if (solutionDisplayed) return; // Prevent duplicate requests
+            
+            document.getElementById("statusMessage").innerText = "Solving maze...";
+            fetch("http://localhost:5000/solve-maze")
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === "success") {
+                        solutionDisplayed = true; 
+                        const path = data.path;
+                        const mazeContainer = document.getElementById("maze");
+                        let mazeSize = mazeData[0].length;
+
+                        path.forEach(([x, y]) => {
+                            let index = x * mazeSize + y;
+                            if (mazeContainer.children[index]) {
+                                mazeContainer.children[index].classList.add("solution");
+                            }
+                        });
+
+                        document.getElementById("statusMessage").innerText = "Path displayed!";
+                    } else {
+                        document.getElementById("statusMessage").innerText = "Error: " + data.message;
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching path:", error);
+                    document.getElementById("statusMessage").innerText = "Failed to connect to server.";
+                });
+        }
+
+        function generateNewMaze() {
+            document.getElementById("statusMessage").innerText = "Generating new maze...";
+            fetch("http://localhost:5000/generate-maze")
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === "success") {
+                        document.getElementById("statusMessage").innerText = "New maze generated!";
+                        
+                        // 🛑 Reset solution display
+                        solutionDisplayed = false;
+
+                        setTimeout(() => {
+                            loadMaze(); // Load new maze dynamically
+                        }, 500);
+                    } else {
+                        document.getElementById("statusMessage").innerText = "Error: " + data.message;
+                    }
+                })
+                .catch(error => {
+                    console.error("Error generating maze:", error);
+                    document.getElementById("statusMessage").innerText = "Failed to generate maze.";
+                });
+        }
+
+        loadMaze();
+    </script>
+</body>
+</html>
