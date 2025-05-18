@@ -46,22 +46,6 @@
     \end{tabularx}
 \end{table}
 
-\section*{Tugas1}
-\subsection{Topik}
-Weighted Graph
-\subsection{Hasil Akhir}
-Kasus: terjadi kebakaran pada suatu tempat (kami belum memastikan 
-tempat apa yang akan kami pakai), Anda sebagai salah satu orang 
-yang terjebak dalam kebakaran tersebut ingin mengetahui jalur 
-evakuasi mana yang tercepat dan teraman untuk dilalui demi keselamatan
-diri Anda. Program kami akan membantu Anda untuk mencari jalur tersebut.
-Sistem dapat menerima input lokasi pengguna dan memiliki pengetahuan
-akan titik-titik yang mengalami kebakaran dan yang tidak mengalami kebakaran.
-Sistem akan mencoba mencari jalur untuk pengguna berdasarkan pengetahuan tersebut
-menggunakan inferensi yang tepat. Jika memungkinkan, pengguna dapat melihat 
-jalur evakuasi yang diberikan oleh program secara visual.
-Perlu diketahui bahwa deskripsi ini dapat berubah suatu waktu.
-
 
 \vfill
 
@@ -83,21 +67,46 @@ Program Studi Informatika \\
   \end{tabular}%
 }
 
-\subsection{Knowledge Based System}
-- Sistem mempunyai pemahaman struktur dan tata letak gedung. \\
-Sistem memiliki data denah 13 gedung di UKDW dan lokasi pintu keluar \\
-- Sistem memiliki algoritma pencarian jalur terbaik seperti menggunakan Dijkstra atau A* untuk menentukan rute teraman
-
-\subsection{Pembagian Tugas}
-\emph{Pembagian Tugas ini masih bersifat general
-dan belum eksplisit untuk} \boxed{saat \; ini}
+\section*{Tugas2}
+\subsection{Deskripsi}
+Bang Jeffry adalah seorang mahasiswa FTI UKDW yang ingin melakukan registrasi
+matakuliah. Bang Jeffry sangat menyukai matakuliah yang berhubungan dengan AI
+dan game. Bang Jeffry sangat tidak menyukai jam matakuliah yang terlalu pagi atau 
+terlalu malam. Dikarenakan bang Jeffry harus mengambil full SKS, maka dia akan mengambil
+matakuliah yang mudah untuk menambah SKS-nya. Ada beberapa kriteria matkul yang menjadi pilihan Bang Jeffry:
 \begin{itemize}
-  \item Tomas: AI
-  \item Philip: AI
-  \item Karel: AI
-  \item Paulus: UI
-  \item Syendhi: UI
+  \item Matkul yang sedang hype
+  \item Matkul yang tidak ada coding
+  \item Matkul yang diampu oleh dosen yang murah hati
+  \item Matkul yang diluar IT (matkul bebas; Bahasa Inggris, Pendidikan Perdamaian)
 \end{itemize}
+
+
+Bang Jeffry juga sangat memilih-milih dosen. Terdapat 2 dosen yang dia sukai yaitu 
+Bu Gloria dan Pak Karel. Selain itu, dia juga sangat menyukai dosen yang tidak mudah mengamuk dan
+murah nilai atau yang biasa disebut dengan dosen \emph{chill}. Jika tidak ada dosen yang chill, maka
+Bang Jeffry akan mengambil matkul tersebut di tahun berikutnya.
+
+
+Dikarenakan Bang Jeffry sangat pemalu, dia akan memilih matkul jika teman-temannya 
+juga memilih matkul itu.
+
+
+\indent Bang Jeffry akan mengulang matakuliah jika dan hanya jika matakuliah tersebut bernilai E.
+
+\subsection{Production System}
+\begin{enumerate}
+    \item \textbf{If} mata kuliah berhubungan denga AI atau Game Development, \textbf{then} tandai sebagai "diminati".
+    \item \textbf{If} jadwal mata kuliah terlalu pagi atau terlalu malam, \textbf{then} tandai sebagai "tidak diminati".
+    \item \textbf{If} mata kuliah tidak memiliki coding, sedang tren, merupakan mata kuliah di luar IT, atau diajarkan oleh dosen yang murah hati, \textbf{then} tandai sebagai "mudah".
+    \item \textbf{If} total SKS yang diambil $<$ 24, \textbf{then} pilih mata kuliah dari kategori "mudah" terlebih dahulu.
+    \item \textbf{If} mata kuliah diajarkan oleh Bu Gloria atau Pak Karel, \textbf{then} pilih mata kuliah tersebut secepatnya.
+    \item \textbf{If} dosen tidak \emph{chill} (mudah marah atau pelit dalam memberi nilai), \textbf{then} tunda pengambilan mata kuliah ke tahun berikutnya.
+    \item \textbf{If} ada setidaknya satu teman yang mengambil mata kuliah tersebut, \textbf{then} tandai sebagai "diminati".
+    \item \textbf{If} mata kuliah sebelumnya mendapat nilai E, \textbf{then} mata kuliah tersebut harus diulang.
+    \item \textbf{If} masih ada sisa SKS yang perlu diambil dan tidak ada kriteria lain yang sesuai, \textbf{then} pilih mata kuliah secara acak.
+\end{enumerate}
+
 
 \vfill
 
