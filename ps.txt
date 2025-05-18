@@ -1,0 +1,36 @@
+var status;
+var time_not_active, not active;
+var semester;
+var IPK;
+var SKS;
+
+if semester >= 4 and 2 | semester then:
+    evaluate is true;
+
+if evaluate is true then:
+    
+    if IPK < 2 then
+        ipk = not satisfied
+
+    if SKS < 36 then:
+        sks = not satisfied
+
+    if time_not_active > 2 semester then:
+        not active = true 
+
+    if not active or ipk not satisfied or sks not satisfied then
+        drop out
+    
+    if semester = 8 and status = not lulus then
+        get warning number 1
+
+    if semester = 10 and status = not lulus then
+        get warning number 2 
+    
+    if semester = 12 and status = not lulus then
+        get warning number 3 
+
+    if semester = 14 and status = not lulus then
+        drop out 
+
+
