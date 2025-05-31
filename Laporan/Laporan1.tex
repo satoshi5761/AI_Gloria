@@ -1,0 +1,130 @@
+\documentclass{article}
+\usepackage[a4paper, margin=1cm]{geometry}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{amsmath}
+
+
+\title{\textbf{LAPORAN TUGAS}}
+\author{Sistem Evakuasi Kebakaran}
+\date{}
+
+\begin{document}
+
+\maketitle
+\begin{center}
+    \includegraphics[scale=0.4]{logo-ukdw.png}
+\end{center}
+
+\begin{table}[h]
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabularx}{\textwidth}{|c|X|}
+        \hline
+        Mata kuliah	& TI0263 – Kecerdasan Buatan (GRUP C) \\
+        \hline
+        Dosen Pengampu & Gloria Virginia, S.Kom., MAI., Ph.D \\
+        \hline
+        Nama Kelompok & C8 \\
+        \hline 
+        Anggota Kelompok & 
+        \begin{minipage}{\textwidth}
+            \vspace{5px}
+            \begin{enumerate}
+                \item 71230985 - Tomas Becket
+                \item 71231002 – Philip Deric Kho  
+                \item 71231015 - Karel Marley Bala Bakior
+                \item 71231017 - Paulus Ungirwalu
+                \item 71231061 - Syendhi Reswara. S
+            \end{enumerate}
+            \vspace{5px}
+        \end{minipage} \\
+        \hline
+        Deklarasi & Dengan ini kami menyatakan bahwa tugas ini merupakan hasil karya kelompok kami, tidak ada manipulasi data serta bukan merupakan plagiasi dari karya orang lain. \\
+        \hline
+    \end{tabularx}
+\end{table}
+
+
+\vfill
+
+\noindent
+\makebox[0pt][l]{%
+  \begin{tabular}{@{}c@{}}
+  \includegraphics[scale=0.2]{fti-ukdw.png}
+  \end{tabular}%
+}\hfill
+\textbf{\begin{tabular}{@{}c@{}}
+    \textbf{UNIVERSITAS KRISTEN DUTA WACANA} \\
+Fakultas Teknologi Informasi \\ 
+Program Studi Informatika \\ 
+  \end{tabular}%
+}\hfill
+\makebox[0pt][r]{%
+  \begin{tabular}{@{}c@{}}
+  \includegraphics[scale=0.133]{tiukdw.jpg}
+  \end{tabular}%
+}
+
+\section*{Tugas2}
+\subsection{Deskripsi}
+Bang Jeffry adalah seorang mahasiswa FTI UKDW yang ingin melakukan registrasi
+matakuliah. Bang Jeffry sangat menyukai matakuliah yang berhubungan dengan AI
+dan game. Bang Jeffry sangat tidak menyukai jam matakuliah yang terlalu pagi atau 
+terlalu malam. Dikarenakan bang Jeffry harus mengambil full SKS, maka dia akan mengambil
+matakuliah yang mudah untuk menambah SKS-nya. Ada beberapa kriteria matkul yang menjadi pilihan Bang Jeffry:
+\begin{itemize}
+  \item Matkul yang sedang hype
+  \item Matkul yang tidak ada coding
+  \item Matkul yang diampu oleh dosen yang murah hati
+  \item Matkul yang diluar IT (matkul bebas; Bahasa Inggris, Pendidikan Perdamaian)
+\end{itemize}
+
+
+Bang Jeffry juga sangat memilih-milih dosen. Terdapat 2 dosen yang dia sukai yaitu 
+Bu Gloria dan Pak Karel. Selain itu, dia juga sangat menyukai dosen yang tidak mudah mengamuk dan
+murah nilai atau yang biasa disebut dengan dosen \emph{chill}. Jika tidak ada dosen yang chill, maka
+Bang Jeffry akan mengambil matkul tersebut di tahun berikutnya.
+
+
+Dikarenakan Bang Jeffry sangat pemalu, dia akan memilih matkul jika teman-temannya 
+juga memilih matkul itu.
+
+
+\indent Bang Jeffry akan mengulang matakuliah jika dan hanya jika matakuliah tersebut bernilai E.
+
+\subsection{Production System}
+\begin{enumerate}
+    \item \textbf{If} mata kuliah berhubungan denga AI atau Game Development, \textbf{then} tandai sebagai "diminati".
+    \item \textbf{If} jadwal mata kuliah terlalu pagi atau terlalu malam, \textbf{then} tandai sebagai "tidak diminati".
+    \item \textbf{If} mata kuliah tidak memiliki coding, sedang tren, merupakan mata kuliah di luar IT, atau diajarkan oleh dosen yang murah hati, \textbf{then} tandai sebagai "mudah".
+    \item \textbf{If} total SKS yang diambil $<$ 24, \textbf{then} pilih mata kuliah dari kategori "mudah" terlebih dahulu.
+    \item \textbf{If} mata kuliah diajarkan oleh Bu Gloria atau Pak Karel, \textbf{then} pilih mata kuliah tersebut secepatnya.
+    \item \textbf{If} dosen tidak \emph{chill} (mudah marah atau pelit dalam memberi nilai), \textbf{then} tunda pengambilan mata kuliah ke tahun berikutnya.
+    \item \textbf{If} ada setidaknya satu teman yang mengambil mata kuliah tersebut, \textbf{then} tandai sebagai "diminati".
+    \item \textbf{If} mata kuliah sebelumnya mendapat nilai E, \textbf{then} mata kuliah tersebut harus diulang.
+    \item \textbf{If} masih ada sisa SKS yang perlu diambil dan tidak ada kriteria lain yang sesuai, \textbf{then} pilih mata kuliah secara acak.
+\end{enumerate}
+
+
+\vfill
+
+\noindent
+\makebox[0pt][l]{%
+  \begin{tabular}{@{}c@{}}
+  \includegraphics[scale=0.2]{fti-ukdw.png}
+  \end{tabular}%
+}\hfill
+\textbf{\begin{tabular}{@{}c@{}}
+    \textbf{UNIVERSITAS KRISTEN DUTA WACANA} \\
+Fakultas Teknologi Informasi \\ 
+Program Studi Informatika \\ 
+  \end{tabular}%
+}\hfill
+\makebox[0pt][r]{%
+  \begin{tabular}{@{}c@{}}
+  \includegraphics[scale=0.133]{tiukdw.jpg}
+  \end{tabular}%
+}
+\end{document}
