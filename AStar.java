@@ -6,26 +6,25 @@ public class AStar {
     static final long INF = Long.MAX_VALUE;
 
     static class Pos {
-        double x, y;
-        Pos(double x, double y) { this.x = x; this.y = y; }
+        double lat, lon;
+        Pos(double lat, double lon) { this.lat = lat; this.lon = lon; }
     }
 
     static Map<Integer, Pos> coordinates = new HashMap<>();
     static {
-        coordinates.put(1, new Pos(0, 0));
-        coordinates.put(2, new Pos(2, 3));
-        coordinates.put(3, new Pos(4, 1));
-        coordinates.put(4, new Pos(1, 5));
-        coordinates.put(5, new Pos(5, 5));
-        coordinates.put(6, new Pos(3, 6));
-        coordinates.put(7, new Pos(6, 2));
-        coordinates.put(8, new Pos(7, 5));
-        coordinates.put(9, new Pos(8, 3));
-        coordinates.put(10, new Pos(9, 6));
-        coordinates.put(11, new Pos(10, 4));
-        coordinates.put(12, new Pos(11, 6));
+        coordinates.put(1, new Pos(-7.786892527493072, 110.37811638436851)); // Agape
+        coordinates.put(2, new Pos(-7.786562258126049, 110.37825953130029)); // Biblos
+        coordinates.put(3, new Pos(-7.78631777007192, 110.37842314604282));  // Chara
+        coordinates.put(4, new Pos(-7.786012910895829, 110.37836850018982)); // Didaktos
+        coordinates.put(5, new Pos(-7.785926844542299, 110.37811203519209)); // Euodia
+        coordinates.put(6, new Pos(-7.786487300114521, 110.37804171414969)); // Filia
+        coordinates.put(7, new Pos(-7.785753220073825, 110.37850078264714)); // Gnosis
+        coordinates.put(8, new Pos(-7.785523171156505, 110.37836550377382)); // Hagios
+        coordinates.put(9, new Pos(-7.7852138021969335, 110.37855178209473));// Iama
+        coordinates.put(10, new Pos(-7.784999599965238, 110.37854751118998));// Koinonia
+        coordinates.put(11, new Pos(-7.78528341456613, 110.37821452033853)); // Logos
+        coordinates.put(12, new Pos(-7.785369062426726, 110.37854481744473));// Makarios
     }
-
 
     static String getGedung(int gedung) {
         switch (gedung) {
@@ -45,12 +44,21 @@ public class AStar {
         }
     }
 
+    public static double haversine(double lat1, double lon1, double lat2, double lon2) {
+        final int R = 6371; 
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLon = Math.toRadians(lon2 - lon1);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+                * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c * 1000; 
+    }
+
     static double heuristic(int a, int b) {
         Pos pa = coordinates.get(a);
         Pos pb = coordinates.get(b);
-        double dx = pa.x - pb.x;
-        double dy = pa.y - pb.y;
-        return Math.sqrt(dx*dx + dy*dy);
+        return haversine(pa.lat, pa.lon, pb.lat, pb.lon);
     }
 
     public static void solve(Scanner sc) {
@@ -114,7 +122,6 @@ public class AStar {
                     System.out.print(getGedung(ans.get(i)));
                     if (i != ans.size() - 1) System.out.print(" -> ");
                 }
-                System.out.println("\nTotal jarak: " + g_score[goal]);
                 return;
             }
 
