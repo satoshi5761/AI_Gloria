@@ -49,7 +49,6 @@ string get_gedung(int gedung) {
     }
 }
 
-// Heuristic menggunakan jarak Euclidean sederhana tanpa konversi ke meter
 double heuristic(int a, int b) {
     Pos pa = coordinates[a];
     Pos pb = coordinates[b];
