@@ -33,7 +33,7 @@ vector<Node> coordinates = {
 const double latitude_to_meter = 111000; // 1 latitude = 111_000 meter
 const double longitude_to_meter = 72000; // 1 longitude = 72_000 meter
 
-int main() {
+vector<Node> get_planar() {
 
     vector<Node> planar;
 
@@ -53,9 +53,16 @@ int main() {
         x = x - min_x;
         y = y - min_y;
     }
+    return planar;
+}
 
-    for (int i = 0; i < 12; i++) {
-        cout << i + 1 << " " << planar[i].x << " " << planar[i].y << '\n';
-    }
 
+double calc_distance(int start, int goal) {
+    static vector<Node> planar = get_planar();
+
+    start--; goal--;
+
+    double delta_x = planar[start].x - planar[goal].x;
+    double delta_y = planar[start].y - planar[goal].y;
+    return sqrt( delta_x*delta_x + delta_y*delta_y );
 }
