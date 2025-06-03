@@ -5,15 +5,12 @@
 #include <climits>
 #include <string>
 #include <queue>
-#include <tuple>
 #include <map>
 
-#define fastio ios::sync_with_stdio(false); cin.tie(NULL);
 using namespace std;
 using ll = long long;
 
 const int n = 12; // jumlah gedung
-const ll INF = LLONG_MAX;
 
 struct Pos {
     double lat, lon;
@@ -52,28 +49,16 @@ string get_gedung(int gedung) {
     }
 }
 
-const double R = 6371000.0; 
-
-double toRadians(double degree) {
-    return degree * M_PI / 180.0;
-}
-
-double haversine(int a, int b) {
+// Heuristic menggunakan jarak Euclidean sederhana tanpa konversi ke meter
+double heuristic(int a, int b) {
     Pos pa = coordinates[a];
     Pos pb = coordinates[b];
-    double dLat = toRadians(pb.lat - pa.lat);
-    double dLon = toRadians(pb.lon - pa.lon);
-    double lat1 = toRadians(pa.lat);
-    double lat2 = toRadians(pb.lat);
-
-    double a_val = sin(dLat/2) * sin(dLat/2) + cos(lat1) * cos(lat2) * sin(dLon/2) * sin(dLon/2);
-    double c = 2 * atan2(sqrt(a_val), sqrt(1 - a_val));
-    return R * c;
+    double dx = pb.lon - pa.lon;
+    double dy = pb.lat - pa.lat;
+    return sqrt(dx*dx + dy*dy);
 }
 
 void solve() {
-    fastio
-
     for (int i = 1; i <= n; i++) {
         cout << i << " = " << get_gedung(i) << '\n';
     }
@@ -106,11 +91,11 @@ void solve() {
     using T = pair<double, int>; // f_score, node
     priority_queue<T, vector<T>, greater<T>> pq;
 
-    vector<double> g_score(n + 1, INF);
+    vector<double> g_score(n + 1, 1e18);
     vector<int> path(n + 1, -1);
 
     g_score[start] = 0;
-    pq.emplace(haversine(start, goal), start);
+    pq.emplace(heuristic(start, goal), start);
 
     while (!pq.empty()) {
         auto [f, current] = pq.top(); pq.pop();
@@ -122,12 +107,13 @@ void solve() {
                 current = path[current];
             }
             reverse(ans.begin(), ans.end());
+
             cout << "Rute terbaik:\n";
             for (int i = 0; i < (int)ans.size(); i++) {
                 cout << get_gedung(ans[i]);
                 if (i != (int)ans.size() - 1) cout << " -> ";
             }
-            cout << "\nTotal jarak: " << g_score[goal] << " meter\n";
+            cout << "\nTotal jarak: " << g_score[goal] << '\n';
             return;
         }
 
@@ -135,7 +121,7 @@ void solve() {
             double tentative_g = g_score[current] + cost;
             if (tentative_g < g_score[neighbor]) {
                 g_score[neighbor] = tentative_g;
-                double f_score = tentative_g + haversine(neighbor, goal);
+                double f_score = tentative_g + heuristic(neighbor, goal);
                 pq.emplace(f_score, neighbor);
                 path[neighbor] = current;
             }
@@ -146,5 +132,7 @@ void solve() {
 }
 
 int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
     solve();
 }
