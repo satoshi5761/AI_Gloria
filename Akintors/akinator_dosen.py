@@ -1,7 +1,7 @@
 import math
 import json
 
-def muat_database(nama_file="database_dosen.json"):
+def muat_database(nama_file="Akinators/database_dosen.json"):
     try:
         with open(nama_file, 'r', encoding='utf-8') as f:
             db = json.load(f)
