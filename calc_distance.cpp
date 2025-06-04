@@ -57,7 +57,7 @@ vector<Node> get_planar() {
 }
 
 
-double calc_distance(int start, int goal) {
+double heuristic(int start, int goal) {
     static vector<Node> planar = get_planar();
 
     start--; goal--;

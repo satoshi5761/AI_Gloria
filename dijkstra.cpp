@@ -6,6 +6,7 @@
 #include <string>
 #include <queue>
 #include <tuple>
+#include <cfloat>
 
 #define debug 1
 #define DEBUG if (debug)
@@ -63,22 +64,22 @@ void solve() {
     cout << "tujuan gedung (1 - 12): ";
     cin>>goal;
 
-    vector< vector<pair<int, int>> > neighbours(n + 1);
+    vector< vector<pair<double, int>> > neighbours(n + 1);
 
-    freopen("input.txt", "r", stdin);
     for (int i = 0; i < m; i++) {
-        int a, b, w;
+        int a, b;
+        double w;
         cin>>a>>b>>w;
         neighbours[a].push_back({w, b});
         neighbours[b].push_back({w, a});
     }
 
-    using T = pair<ll, int>;
+    using T = pair<double, int>;
     priority_queue<T, vector<T>, greater<T>> pq;
 
     pq.push({0, start});
 
-    vector<ll> min_distance(n+1, INF);
+    vector<double> min_distance(n+1, DBL_MAX);
     vector<int> path(n+1, -1);
 
     path[start] = 0;
@@ -101,11 +102,12 @@ void solve() {
             for (int i = 0; i < ans.size() - 1; i++) {
                 cout << get_gedung(ans[i]) << " -> ";
             } cout << get_gedung(ans[ans.size()-1]) << '\n';
+            cout << min_distance[goal] << '\n';
             return;
         }
 
         for (auto &[current_distance, vertex_target] : neighbours[vertex_now]) {
-            ll total_distance = distance + current_distance;
+            double total_distance = distance + current_distance;
 
             if (min_distance[vertex_target] > total_distance) {
                 pq.push({total_distance, vertex_target});
